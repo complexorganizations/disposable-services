@@ -46,7 +46,7 @@ func init() {
 		flag.Parse()
 		update = *tempUpdate
 	} else {
-		os.Exit(0)
+		log.Fatal("Error: No flags provided. Please use -help for more information.")
 	}
 }
 
