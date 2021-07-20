@@ -17,6 +17,4 @@ jobs:
       - name: Run Test
         run: go run .
       - name: Build Test
-        run: go build -v .
-      - name: Test the app
-        run: ./disposable-services-registry
+        run: go build .
