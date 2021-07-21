@@ -236,7 +236,7 @@ func scrapeDomainContent(url string, saveLocation string) {
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) {
+	if validateDomainViaLookupMX(uniqueDomain) {
 		// Maintain a list of all authorized domains.
 		writeToFile(locatioToSave, uniqueDomain)
 	}
@@ -262,27 +262,9 @@ func makeUnique(randomStrings []string) []string {
 	return uniqueString
 }
 
-// Using name servers, verify the domain.
-func validateDomainViaLookupNS(domain string) bool {
-	valid, _ := net.LookupNS(domain)
-	return len(valid) >= 1
-}
-
-// Using ip address, verify the domain.
-func validateDomainViaLookupIP(domain string) bool {
-	valid, _ := net.LookupIP(domain)
-	return len(valid) >= 1
-}
-
-// Using cname, verify the domain.
-func validateDomainViaLookupCNAME(domain string) bool {
-	valid, _ := net.LookupCNAME(domain)
-	return len(valid) >= 1
-}
-
-// Using host, see if the domain is legitimate.
-func validateDomainViaLookupHost(domain string) bool {
-	valid, _ := net.LookupHost(domain)
+// Using mx, verify the domain.
+func validateDomainViaLookupMX(domain string) bool {
+	valid, _ := net.LookupMX(domain)
 	return len(valid) >= 1
 }
 
